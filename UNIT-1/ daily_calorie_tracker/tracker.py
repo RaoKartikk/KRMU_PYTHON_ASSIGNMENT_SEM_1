@@ -1,129 +1,46 @@
-# tracker.py
-"""
-Daily Calorie Tracker
-Developer: [Kartik]
-Project: Daily Calorie Intake Monitor
-"""
+import datetime as dt
 
-import datetime
+print("\033[1;33m" + "[======================= DAILY CALORIE TRACKER =======================]" + "\033[0m")
+print("\nNAME: Kartik | ROLL NO: 2501730166")
+print("DATE:", dt.datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+print()
 
-print("=" * 50)
-print("      DAILY CALORIE TRACKER")
-print("=" * 50)
-print("Welcome to your daily calorie monitoring tool!")
-print("This tool helps you log meals and track calories.")
-print("-" * 50)
+meals, cal = [], []
+num = int(input("HOW MANY MEALS YOU WANT TO ADD: "))
+limit = float(input("ENTER DAILY CALORIE LIMIT: "))
+print()
 
-# Get number of meals
-try:
-    num_meals = int(input("How many meals do you want to enter? "))
-    print()
-except ValueError:
-    print("Invalid input! Please enter a valid number.")
-    exit()
+for _ in range(num):
+    data = input("Enter meal and calories (comma separated): ").strip()
+    name, value = [x.strip() for x in data.split(',')]
+    meals.append(name.upper())
+    cal.append(float(value))
 
-# Collect meal data
-meal_names = []
-calorie_amounts = []
+print("\n\033[1;96m{:<5}{:<20}{:<15}\033[0m".format("No", "Meal", "Calories"))
+print("\033[1;96m" + "-" * 45 + "\033[0m")
+for i, (m, c) in enumerate(zip(meals, cal), 1):
+    print("\033[1;96m{:<5}{:<20}{:<15}\033[0m".format(i, m, c))
+print("\033[1;96m" + "-" * 45 + "\033[0m")
 
-for i in range(num_meals):
-    print(f"Meal #{i+1}:")
-    meal_name = input("  Enter meal name: ")
-    meal_names.append(meal_name)
-    
-    try:
-        calories = float(input("  Enter calorie amount: "))
-        calorie_amounts.append(calories)
-    except ValueError:
-        print("  Invalid calorie amount! Using 0 calories.")
-        calorie_amounts.append(0)
-    print()
+total = sum(cal)
+avg = total / len(cal)
+print(f"\nTOTAL CALORIES: {total:.1f}")
+print(f"AVERAGE CALORIES/MEAL: {avg:.2f}\n")
 
-# Calculate totals
-total_calories = 0
-for calories in calorie_amounts:
-    total_calories += calories
-
-if num_meals > 0:
-    average_calories = total_calories / num_meals
+if total > limit:
+    print("ALERT: YOU EXCEEDED YOUR DAILY LIMIT.")
 else:
-    average_calories = 0
+    print("GOOD JOB: YOU ARE UNDER YOUR CALORIE LIMIT.")
 
-# Get daily limit
-try:
-    daily_limit = float(input("Enter your daily calorie limit: "))
-except ValueError:
-    print("Invalid input! Using default limit of 2000 calories.")
-    daily_limit = 2000
-
-print("\n" + "=" * 50)
-
-# Check limit status
-if total_calories > daily_limit:
-    excess_calories = total_calories - daily_limit
-    print("⚠️  WARNING: You have EXCEEDED your daily limit!")
-    print(f"   You are {excess_calories:.1f} calories over your limit.")
+save = input("\nSave report? (yes/no): ").strip().lower()
+if save == "yes":
+    with open("calorie_log.txt", "w") as f:
+        f.write("===== DAILY CALORIE REPORT =====\n")
+        f.write(f"NAME: Kartik\nROLL: 2501730166\nDATE: {dt.datetime.now()}\n\n")
+        for i, (m, c) in enumerate(zip(meals, cal), 1):
+            f.write(f"{i}. {m:<20} {c:<10}\n")
+        f.write(f"\nTotal Calories: {total:.1f}\nAverage: {avg:.2f}\nLimit: {limit}\n")
+        f.write("Status: {}\n".format("Exceeded Limit" if total > limit else "Within Limit"))
+    print("File saved successfully.")
 else:
-    remaining_calories = daily_limit - total_calories
-    print("✅ SUCCESS: You are within your daily limit!")
-    print(f"   You have {remaining_calories:.1f} calories remaining.")
-
-print("=" * 50)
-
-# Display report
-print("\n" + "=" * 50)
-print("           DAILY CALORIE REPORT")
-print("=" * 50)
-
-print(f"{'Meal':<15} {'Calories':>10}")
-print("-" * 30)
-
-for i in range(len(meal_names)):
-    print(f"{meal_names[i]:<15} {calorie_amounts[i]:>10.1f}")
-
-print("-" * 30)
-print(f"{'TOTAL':<15} {total_calories:>10.1f}")
-print(f"{'AVERAGE':<15} {average_calories:>10.1f}")
-print(f"{'DAILY LIMIT':<15} {daily_limit:>10.1f}")
-print("=" * 50)
-
-# Save to file option
-save_choice = input("\nDo you want to save this report to a file? (y/n): ").lower()
-
-if save_choice in ['y', 'yes']:
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    filename = f"calorie_log_{timestamp}.txt"
-    
-    try:
-        with open(filename, "w") as file:
-            file.write("=" * 50 + "\n")
-            file.write("        DAILY CALORIE TRACKER LOG\n")
-            file.write("=" * 50 + "\n")
-            file.write(f"Date: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}\n")
-            file.write("-" * 50 + "\n")
-            
-            file.write(f"{'Meal':<15} {'Calories':>10}\n")
-            file.write("-" * 30 + "\n")
-            
-            for i in range(len(meal_names)):
-                file.write(f"{meal_names[i]:<15} {calorie_amounts[i]:>10.1f}\n")
-            
-            file.write("-" * 30 + "\n")
-            file.write(f"{'TOTAL':<15} {total_calories:>10.1f}\n")
-            file.write(f"{'AVERAGE':<15} {average_calories:>10.1f}\n")
-            file.write(f"{'LIMIT':<15} {daily_limit:>10.1f}\n")
-            
-            if total_calories > daily_limit:
-                file.write(f"STATUS: EXCEEDED by {total_calories - daily_limit:.1f} calories\n")
-            else:
-                file.write(f"STATUS: Within limit ({daily_limit - total_calories:.1f} remaining)\n")
-            
-            file.write("=" * 50 + "\n")
-        
-        print(f"✅ Report saved successfully as '{filename}'")
-        
-    except Exception as e:
-        print(f"❌ Error saving file: {e}")
-
-print("\nThank you for using Daily Calorie Tracker!")
-print("Stay healthy! 🍎")
+    print("File not saved.")
