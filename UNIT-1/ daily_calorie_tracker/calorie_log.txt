@@ -13,4 +13,4 @@ S NOMEAL NAME           CALORIES
 Total Calories Consumed: 3000.0
 Average Calories per Meal: 750.00
 Daily Calorie Limit: 4500.0
-STATUS: You are within your daily calorie limit.
+
