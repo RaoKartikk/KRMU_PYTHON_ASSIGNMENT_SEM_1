@@ -1,0 +1,16 @@
+===== DAILY CALORIE TRACKER REPORT =====
+NAME: Kartik
+ROLL NUMBER: 2501730166
+DATE: 2025-11-09 
+
+S NOMEAL NAME           CALORIES                 
+----------------------------------------
+1   BREAKKFAST          800.0                    
+2   LUNCH               700.0                    
+3   SNACKS              600.0                    
+4   DINNER              900.0                    
+----------------------------------------
+Total Calories Consumed: 3000.0
+Average Calories per Meal: 750.00
+Daily Calorie Limit: 4500.0
+STATUS: You are within your daily calorie limit.
