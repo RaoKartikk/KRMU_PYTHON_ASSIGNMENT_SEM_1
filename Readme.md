@@ -1,14 +1,14 @@
-# GradeBook Analyzer
+# 📘 GradeBook Analyzer
 
 **Student Name:** Kartik 
-**Roll Number:** 2501730166 
+**Roll Number:** 2501730166
 **Course:** Python Programming
 
-## Project Description
+## 📝 Project Description
 
 The **GradeBook Analyzer** is a Python command-line tool designed to help teachers and students manage and analyze student marks efficiently. It allows users to enter data manually or load it from a CSV file to automatically calculate averages, assign grades, and generate a statistical report.
 
-## Features
+## ✨ Features
 
 * **Manual Entry:** Type student names and marks directly into the program.
   * **CSV Import:** Load a list of students from a `.csv` file.
@@ -20,7 +20,7 @@ The **GradeBook Analyzer** is a Python command-line tool designed to help teache
     * Pass/Fail Counts
     * Grade Distribution
 
-## How to Run
+## 🚀 How to Run
 
 1. Ensure you have **Python** installed.
 2. Download the `gradebook.py` file.
