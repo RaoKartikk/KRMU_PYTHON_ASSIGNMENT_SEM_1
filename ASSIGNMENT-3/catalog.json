@@ -1,0 +1,9 @@
+{
+  "12345678": {
+    "isbn": "12345678",
+    "title": "maths",
+    "author": "rd sharma",
+    "year": 2022,
+    "status": "available"
+  }
+}
